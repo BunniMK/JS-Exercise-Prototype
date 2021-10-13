@@ -84,14 +84,20 @@ Car.prototype.fill = function(gallons){
 }
 
 Car.prototype.drive = function(distance){
-    this.tank -= (distance / this.milesPerGallon);
-    this.odometer += distance ;
-  
+   const fuelUsed = distance/ this.milesPerGallon;
+   const newTank = this.tank - fuelUsed;
+   const newOdo = this.odometer + distance;
+   const maxUsage = Math.floor(this.milesPerGallon * this.tank);
+   if(newTank > maxUsage || newTank < 0){
+    return `I ran out of fuel at ${maxUsage} miles!`
+  } else {
+    return `Your car now has ${newTank.toFixed(1)} gallons and your odometer reads ${newOdo}.`
+    }
   } 
 
-  const newCar = new Car("Toyoya", 40);
-  newCar.fill(12);
-  newCar.drive(120);
+  const newCar = new Car("maseratini", 25);
+  console.log( `Gas ${newCar.fill(.2)} gallons`);
+  console.log(newCar.drive(3));
 /*
   TASK 3
     - Write a Baby constructor sub-classing Person.
@@ -113,10 +119,10 @@ Baby.prototype.play = function(){
 /* 
   TASK 4
   In your own words explain the four principles for the "this" keyword below:
-  1. 
-  2. 
-  3. 
-  4. 
+  1. Window binding - makes "this" will point to window/console objects
+  2. Implicit binding - makes "this" refer to the object using it. ie the object to the left of the dot
+  3. Explicit binding - the "this"  is applied to the invoked objects 
+  4. New binding - Creates a variable with a new object that can then be referred
 */
 
 
