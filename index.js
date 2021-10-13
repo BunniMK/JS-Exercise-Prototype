@@ -39,12 +39,21 @@ Airplane.prototype.land = function () {
         + It should return a string with `name` and `age`. Example: "Mary, 50"
 */
 
-function Person() {
-  
+function Person(name, age) {
+  this.name = name;
+  this.age = age;
+  this.stomach = []
 }
 
-
-
+Person.prototype.toString = function (){
+  return `${this.name} is ${this.age} years old.`
+}
+Person.prototype.eat = function(food){
+  return this.stomach.push(food);
+}
+Person.prototype.poop = function(){
+  return this.stomach = [];
+}
 
 
 
@@ -63,22 +72,43 @@ function Person() {
         + The `drive` method should return a string "I ran out of fuel at x miles!" x being `odometer`.
 */
 
-function Car() {
-  
+function Car(model, milesPerGallon) {
+  this.model = model;
+  this.milesPerGallon = milesPerGallon
+  this.tank = 0;
+  this.odometer = 0;
 }
 
+Car.prototype.fill = function(gallons){
+ return this.tank += gallons;
+}
 
+Car.prototype.drive = function(distance){
+    this.tank -= (distance / this.milesPerGallon);
+    this.odometer += distance ;
+  
+  } 
+
+  const newCar = new Car("Toyoya", 40);
+  newCar.fill(12);
+  newCar.drive(120);
 /*
   TASK 3
-    - Write a Baby constructor subclassing Person.
+    - Write a Baby constructor sub-classing Person.
     - Besides `name` and `age`, Baby takes a third argument to initialize `favoriteToy`.
     - Besides the methods on Person.prototype, babies have the ability to `.play()`:
         + Should return a string "Playing with x", x being the favorite toy.
 */
-function Baby() {
- 
+function Baby(name, age, favoriteToy) {
+ Person.call(this, name, age);
+ this.favoriteToy = favoriteToy;
 }
 
+Baby.prototype = Object.create(Person.prototype);
+
+Baby.prototype.play = function(){
+  return `Playing with ${this.favoriteToy}`;
+}
 
 /* 
   TASK 4
